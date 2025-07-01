@@ -1,10 +1,10 @@
-# 📧 Extracteur d'E-mails Parcoursup - Documentation Professionnelle
+# Extracteur d'E-mails Parcoursup - Documentation Professionnelle
 
-## 🎯 Objectif
+## Objectif
 
 Ce script permet d'extraire automatiquement des adresses e-mail de contact depuis une liste d'URLs Parcoursup présentes dans un fichier Excel. Il recherche en priorité les mails sur la fiche Parcoursup (rubrique "Contacter et échanger avec l'établissement") puis, à défaut, tente de les récupérer sur le site officiel affiché sur la fiche. Les résultats sont enregistrés dans un nouveau fichier Excel.
 
-## ✨ Fonctionnalités principales
+## Fonctionnalités principales
 
 - **Lecture automatique** d'un fichier Excel listant les URLs des fiches formations Parcoursup
 - **Extraction intelligente** des contacts :
@@ -15,7 +15,7 @@ Ce script permet d'extraire automatiquement des adresses e-mail de contact depui
 - **Système de pauses automatiques** pour limiter la sollicitation du serveur
 - **Gestion robuste des erreurs** (poursuite même en cas d'échec partiel)
 
-## 📋 Prérequis
+## Prérequis
 
 ### Environnement
 
@@ -38,7 +38,7 @@ projet/
 └── logs/                    # Dossier des logs (créé automatiquement)
 ```
 
-## 🚀 Installation et utilisation
+## Installation et utilisation
 
 ### 1. Installation des dépendances
 
@@ -65,12 +65,12 @@ python scraper_bulk.py
 Modifiez les variables dans le script :
 
 ```python
-input_file = '20250117_cartographie_for.xlsx'  # Votre fichier Excel
-url_column = 'O'                                # Colonne des URLs
-start_row = 2                                   # Ligne de démarrage
+input_file = '20250117_cartographie_for.xlsx'
+url_column = 'O'
+start_row = 2
 ```
 
-## 🏗️ Architecture du script
+## Architecture du script
 
 ### 1. `extract_emails_from_text(text)`
 
@@ -112,7 +112,7 @@ start_row = 2                                   # Ligne de démarrage
   - Gestion complète des erreurs
   - Statistiques en temps réel
 
-## 📊 Format du fichier de sortie
+## Format du fichier de sortie
 
 Le fichier généré `contacts_extraits_YYYYMMDD_HHMMSS.xlsx` contient :
 
@@ -128,12 +128,12 @@ Le fichier généré `contacts_extraits_YYYYMMDD_HHMMSS.xlsx` contient :
 
 ### Statuts possibles
 
-- ✅ **Traité avec succès** : E-mails trouvés
-- ⚠️ **Traité - Aucun e-mail trouvé** : Page accessible mais pas d'e-mail
-- ❌ **Erreur** : Problème technique (timeout, page inaccessible)
-- ⏭️ **Skipped** : URL invalide ou vide
+- **Traité avec succès** : E-mails trouvés
+- **Traité - Aucun e-mail trouvé** : Page accessible mais pas d'e-mail
+- **Erreur** : Problème technique (timeout, page inaccessible)
+- **Skipped** : URL invalide ou vide
 
-## ⚡ Performances et optimisations
+## Performances et optimisations
 
 ### Temps de traitement estimé
 
@@ -152,27 +152,27 @@ if processed_count % 25 == 0:  # Au lieu de 50
     time.sleep(5)  # Au lieu de 10 secondes
 ```
 
-## 🛡️ Bonnes pratiques et sécurité
+## Bonnes pratiques et sécurité
 
 ### Respect des serveurs
 
-- ⏸️ **Pauses automatiques** entre les requêtes
-- 🔄 **Limitation des timeouts** (10-15 secondes)
-- 📊 **Monitoring des erreurs** pour détecter les blocages
+- **Pauses automatiques** entre les requêtes
+- **Limitation des timeouts** (10-15 secondes)
+- **Monitoring des erreurs** pour détecter les blocages
 
 ### Gestion des erreurs
 
-- 🔄 **Poursuite automatique** en cas d'erreur ponctuelle
-- 💾 **Sauvegarde régulière** pour éviter les pertes
-- 📝 **Logs détaillés** pour le débogage
+- **Poursuite automatique** en cas d'erreur ponctuelle
+- **Sauvegarde régulière** pour éviter les pertes
+- **Logs détaillés** pour le débogage
 
 ### Considérations légales
 
-- ✅ **Usage responsable** : Respecter les CGU des sites
-- 🎯 **Finalité légitime** : Études, recherche, information
-- 🚫 **Pas de spam** : Limitation à 3 e-mails par site
+- **Usage responsable** : Respecter les CGU des sites
+- **Finalité légitime** : Études, recherche, information
+- **Pas de spam** : Limitation à 3 e-mails par site
 
-## 🔧 Dépannage
+## Dépannage
 
 ### Problèmes courants
 
@@ -187,7 +187,7 @@ if processed_count % 25 == 0:  # Au lieu de 50
 
 ```python
 # Augmenter les timeouts dans le script
-response = requests.get(url, timeout=30)  # Au lieu de 15
+response = requests.get(url, timeout=30)
 ```
 
 #### 3. Colonne URL introuvable
@@ -232,7 +232,7 @@ Fichier de sortie: contacts_extraits_20250117_143025.xlsx
 ============================================================
 ```
 
-## 🔄 Modularité et évolution
+## Modularité et évolution
 
 ### Adaptation aux changements
 
@@ -244,12 +244,12 @@ Fichier de sortie: contacts_extraits_20250117_143025.xlsx
 
 ### Extensions possibles
 
-- 🌐 **Support multi-sites** (autres plateformes que Parcoursup)
-- 📱 **Interface graphique** pour les utilisateurs non-techniques
-- 🔄 **Mode incrémental** (reprendre un traitement interrompu)
-- 📊 **Reporting avancé** (graphiques, statistiques détaillées)
+- **Support multi-sites** (autres plateformes que Parcoursup)
+- **Interface graphique** pour les utilisateurs non-techniques
+- **Mode incrémental** (reprendre un traitement interrompu)
+- **Reporting avancé** (graphiques, statistiques détaillées)
 
-## 📞 Support et contribution
+## Support et contribution
 
 ### En cas de problème
 
@@ -259,22 +259,10 @@ Fichier de sortie: contacts_extraits_20250117_143025.xlsx
 
 ### Améliorations suggérées
 
-- 🚀 **Parallélisation** : Traitement multi-thread (avec précaution)
-- 🎯 **Filtres avancés** : Exclusion de certains types d'établissements
-- 📊 **Base de données** : Stockage dans PostgreSQL/MySQL
+- **Parallélisation** : Traitement multi-thread (avec précaution)
+- **Filtres avancés** : Exclusion de certains types d'établissements
+- **Base de données** : Stockage dans PostgreSQL/MySQL
 
-## 📝 Résumé
+## Résumé
 
 Ce script propose une méthode **automatisée**, **rapide** et **documentée** pour consolider les mails de contact d'établissements ou de formations à partir du portail Parcoursup et de leur site officiel.
-
-**Idéal pour** :
-
-- 📊 Études prospectives
-- 📧 Diffusion de campagnes d'information
-- 🗺️ Analyse de la cartographie de l'offre de formation
-- 🎯 Recherche et développement éducatif
-
----
-
-_Développé avec ❤️ pour l'automatisation intelligente de la collecte de données éducatives_
-# scrapping
