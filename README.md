@@ -207,7 +207,7 @@ tail -f scraper_bulk.log
 python check_results.py
 ```
 
-## 📈 Statistiques et reporting
+## Statistiques et reporting
 
 ### Métriques collectées
 
