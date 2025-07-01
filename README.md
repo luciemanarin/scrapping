@@ -100,32 +100,32 @@ start_row = 2
 - **Sortie** : Liste des e-mails trouvés
 - **Regex utilisée** : `r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'`
 
-### 2. `get_official_website_from_parcoursup(soup)`
+### 2. `extract_contacts_from_url(url)` - **FONCTION PRINCIPALE**
+
+- **But** : Extraire les e-mails "général", "pédagogique" et "administratif" depuis une URL Parcoursup
+- **Stratégie complète** :
+  1. **ÉTAPE 1** : Recherche dans la section "Contacter et échanger avec l'établissement" sur Parcoursup
+  2. **ÉTAPE 2** : Catégorisation intelligente selon le contexte (pédagogique/administratif)
+  3. **ÉTAPE 3** : **SI AUCUN E-MAIL trouvé sur Parcoursup** → Appelle `get_official_website_from_parcoursup()` puis `scrape_official_website()`
+- **Timeout** : 15 secondes par requête Parcoursup, 10 secondes pour le site officiel
+- **Sortie** : Tuple `(contact_général, contact_pédagogique, contact_admin)`
+
+### 3. `get_official_website_from_parcoursup(soup)` - **FONCTION AUXILIAIRE**
 
 - **But** : Récupérer le site officiel de l'établissement à partir de la fiche Parcoursup
 - **Entrée** : Objet BeautifulSoup de la page Parcoursup
 - **Sortie** : URL du site officiel ou `None`
 - **Filtres** : Exclut les domaines `parcoursup.fr` et `gouv.fr`
-- **Usage** : Appelée uniquement si aucun e-mail n'est trouvé sur Parcoursup
+- **Usage** : Appelée par `extract_contacts_from_url()` uniquement si aucun e-mail trouvé sur Parcoursup
 
-### 3. `scrape_official_website(url)`
+### 4. `scrape_official_website(url)` - **FONCTION AUXILIAIRE**
 
 - **But** : Scraper le site officiel de l'établissement pour y trouver des e-mails
-- **Utilisation** : Fallback uniquement si Parcoursup ne contient pas d'e-mails
+- **Utilisation** : Appelée par `extract_contacts_from_url()` en fallback uniquement
 - **Limitation** : Maximum 3 e-mails pour éviter le spam
 - **Timeout** : 10 secondes par requête
 - **Gestion d'erreur** : Retourne une liste vide si l'URL est invalide ou inaccessible
 - **Sortie** : Liste d'adresses mails (0 à 3)
-
-### 4. `extract_contacts_from_url(url)`
-
-- **But** : Extraire les e-mails "général", "pédagogique" et "administratif" depuis Parcoursup
-- **Stratégie prioritaire** :
-  1. **ÉTAPE 1** : Recherche dans la section "Contacter et échanger avec l'établissement" sur Parcoursup
-  2. **ÉTAPE 2** : Catégorisation intelligente selon le contexte (pédagogique/administratif)
-  3. **ÉTAPE 3** : **SI AUCUN E-MAIL trouvé sur Parcoursup** → Fallback sur le site officiel
-- **Timeout** : 15 secondes par requête Parcoursup, 10 secondes pour le site officiel
-- **Sortie** : Tuple `(contact_général, contact_pédagogique, contact_admin)`
 
 ### 5. `process_excel_bulk(input_file, url_column='O', start_row=2)`
 
