@@ -2,14 +2,35 @@
 
 ## Objectif
 
-Ce script permet d'extraire automatiquement des adresses e-mail de contact depuis une liste d'URLs Parcoursup présentes dans un fichier Excel. Il recherche en priorité les mails sur la fiche Parcoursup (rubrique "Contacter et échanger avec l'établissement") puis, à défaut, tente de les récupérer sur le site officiel affiché sur la fiche. Les résultats sont enregistrés dans un nouveau fichier Excel.
+Ce script permet d'extraire automatiquement des adresses e-mail de contact depuis une liste d'URLs Parcoursup présentes dans un fichier Excel.
+
+**Stratégie d'extraction :**
+
+1. **PRIORITÉ** : Recherche d'abord les e-mails sur la fiche Parcoursup (rubrique "Contacter et échanger avec l'établissement")
+2. **FALLBACK** : Si aucun e-mail n'est trouvé sur Parcoursup, va chercher sur le site officiel de l'établissement
+3. **RÉSULTAT** : Sauvegarde les e-mails trouvés dans un nouveau fichier Excel avec statut détaillé
+
+## Processus d'extraction détaillé
+
+Pour chaque URL Parcoursup dans votre fichier Excel :
+
+1. **Accès à la fiche Parcoursup** : Le script ouvre l'URL de la formation
+2. **Recherche sur Parcoursup** : Cherche la section "Contacter et échanger avec l'établissement"
+3. **Extraction Parcoursup** : Tente d'extraire les e-mails (général, pédagogique, administratif)
+4. **Si e-mails trouvés** : Sauvegarde et passe à l'URL suivante
+5. **Si aucun e-mail sur Parcoursup** :
+   - Cherche le lien du site officiel de l'établissement
+   - Va sur le site officiel
+   - Extrait les e-mails depuis le site officiel
+6. **Sauvegarde** : Enregistre tous les résultats avec statut détaillé
 
 ## Fonctionnalités principales
 
 - **Lecture automatique** d'un fichier Excel listant les URLs des fiches formations Parcoursup
-- **Extraction intelligente** des contacts :
-  - Contact "général", "pédagogique" et "administratif" dans les pages Parcoursup
-  - Contacts sur le site officiel si la fiche Parcoursup n'en propose pas
+- **Double stratégie d'extraction** :
+  - **Priorité** : E-mails depuis les pages Parcoursup
+  - **Fallback** : E-mails depuis le site officiel de l'établissement
+- **Catégorisation intelligente** : Distingue les contacts général, pédagogique et administratif
 - **Sauvegarde détaillée** dans un nouveau fichier Excel :
   - Chaque ligne contient : ligne d'origine, URL, mails trouvés, statut du traitement, horodatage
 - **Système de pauses automatiques** pour limiter la sollicitation du serveur
@@ -85,22 +106,25 @@ start_row = 2
 - **Entrée** : Objet BeautifulSoup de la page Parcoursup
 - **Sortie** : URL du site officiel ou `None`
 - **Filtres** : Exclut les domaines `parcoursup.fr` et `gouv.fr`
+- **Usage** : Appelée uniquement si aucun e-mail n'est trouvé sur Parcoursup
 
 ### 3. `scrape_official_website(url)`
 
-- **But** : Ouvrir le site officiel et récupérer les premiers e-mails trouvés
+- **But** : Scraper le site officiel de l'établissement pour y trouver des e-mails
+- **Utilisation** : Fallback uniquement si Parcoursup ne contient pas d'e-mails
 - **Limitation** : Maximum 3 e-mails pour éviter le spam
 - **Timeout** : 10 secondes par requête
+- **Gestion d'erreur** : Retourne une liste vide si l'URL est invalide ou inaccessible
 - **Sortie** : Liste d'adresses mails (0 à 3)
 
 ### 4. `extract_contacts_from_url(url)`
 
-- **But** : Extraire les e-mails "général", "pédagogique" et "administratif"
-- **Stratégie** :
-  1. Recherche dans la section "Contacter et échanger avec l'établissement"
-  2. Catégorisation intelligente selon le contexte
-  3. Fallback sur le site officiel si nécessaire
-- **Timeout** : 15 secondes par requête
+- **But** : Extraire les e-mails "général", "pédagogique" et "administratif" depuis Parcoursup
+- **Stratégie prioritaire** :
+  1. **ÉTAPE 1** : Recherche dans la section "Contacter et échanger avec l'établissement" sur Parcoursup
+  2. **ÉTAPE 2** : Catégorisation intelligente selon le contexte (pédagogique/administratif)
+  3. **ÉTAPE 3** : **SI AUCUN E-MAIL trouvé sur Parcoursup** → Fallback sur le site officiel
+- **Timeout** : 15 secondes par requête Parcoursup, 10 secondes pour le site officiel
 - **Sortie** : Tuple `(contact_général, contact_pédagogique, contact_admin)`
 
 ### 5. `process_excel_bulk(input_file, url_column='O', start_row=2)`
