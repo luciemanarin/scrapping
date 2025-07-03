@@ -238,7 +238,6 @@ python check_results.py
 - **Total de lignes traitées**
 - **Taux de succès** (e-mails trouvés)
 - **Nombre d'erreurs**
-- **Lignes ignorées** (URLs invalides)
 - **Temps de traitement**
 
 ### Exemple de rapport final
