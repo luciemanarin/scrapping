@@ -30,7 +30,7 @@ Pour chaque URL Parcoursup dans votre fichier Excel :
 - **Double stratégie d'extraction** :
   - **Priorité** : E-mails depuis les pages Parcoursup
   - **Fallback** : E-mails depuis le site officiel de l'établissement
-- **Catégorisation intelligente** : Distingue les contacts général, pédagogique et administratif
+- **Catégorisation intelligente** : Distingue les contacts "général", "pédagogique" et "administratif"
 - **Sauvegarde détaillée** dans un nouveau fichier Excel :
   - Chaque ligne contient : ligne d'origine, URL, mails trouvés, statut du traitement, horodatage
 - **Système de pauses automatiques** pour limiter la sollicitation du serveur
