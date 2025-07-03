@@ -162,13 +162,13 @@ Le fichier généré `contacts_extraits_YYYYMMDD_HHMMSS.xlsx` contient :
 ### Temps de traitement estimé
 
 - **104 679 lignes** avec pauses de sécurité
-- **Durée estimée** : ~29 heures
+- **Durée estimée** : ~19 heures
 - **Sauvegarde automatique** : Toutes les 100 lignes
 
 ### Optimisations possibles
 
 ```python
-# Réduire les pauses (à vos risques et périls)
+# Réduire les pauses
 time.sleep(0.5)  # Au lieu de 1 seconde
 
 # Traitement par lots
